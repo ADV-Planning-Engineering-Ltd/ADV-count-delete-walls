@@ -19,7 +19,7 @@ body {
   height: calc(100vh - 150px);
 }
 
-#forgeViewer {
+#apsViewer {
   width: 100%;
   height: calc(100vh - 850px);
 }

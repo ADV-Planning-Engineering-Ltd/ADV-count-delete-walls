@@ -1,7 +1,8 @@
 ﻿/////////////////////////////////////////////////////////////////////
-// Copyright (c) Autodesk, Inc. All rights reserved
-// Written by Forge Partner Development
+// Copyright 2022 Autodesk Inc
+// Written by Develope Advocacy and Support
 //
+
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
 // provided that the above copyright notice appears in all copies and
@@ -15,12 +16,12 @@
 // DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
 // UNINTERRUPTED OR ERROR FREE.
 /////////////////////////////////////////////////////////////////////
-using Autodesk.Forge;
+using Autodesk.APS;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
-namespace forgesample.Controllers
+namespace APSsample.Controllers
 {
     [ApiController]
     public class OAuthController : ControllerBase
@@ -36,7 +37,7 @@ namespace forgesample.Controllers
         /// Get access token with public (viewables:read) scope
         /// </summary>
         [HttpGet]
-        [Route("api/forge/oauth/token")]
+        [Route("api/apsoauth/token")]
         public async Task<dynamic> GetPublicAsync()
         {
             if (PublicToken == null || PublicToken.ExpiresAt < DateTime.UtcNow)
@@ -69,8 +70,8 @@ namespace forgesample.Controllers
             TwoLeggedApi oauth = new TwoLeggedApi();
             string grantType = "client_credentials";
             dynamic bearer = await oauth.AuthenticateAsync(
-              GetAppSetting("FORGE_CLIENT_ID"),
-              GetAppSetting("FORGE_CLIENT_SECRET"),
+              GetAppSetting("APS_CLIENT_ID"),
+              GetAppSetting("APS_CLIENT_SECRET"),
               grantType,
               scopes);
             return bearer;

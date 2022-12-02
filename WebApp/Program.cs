@@ -1,7 +1,8 @@
 ﻿/////////////////////////////////////////////////////////////////////
-// Copyright (c) Autodesk, Inc. All rights reserved
-// Written by Forge Partner Development
+// Copyright 2022 Autodesk Inc
+// Written by Develope Advocacy and Support
 //
+
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
 // provided that the above copyright notice appears in all copies and
@@ -21,7 +22,7 @@ using Microsoft.AspNetCore.Hosting;
 using Autodesk.Forge.Core;
 using Autodesk.Forge.DesignAutomation;
 
-namespace forgesample
+namespace APSsample
 {
     public class Program
     {

@@ -1,7 +1,8 @@
 ﻿/////////////////////////////////////////////////////////////////////
-// Copyright (c) Autodesk, Inc. All rights reserved
-// Written by Forge Partner Development
+// Copyright 2022 Autodesk Inc
+// Written by Develope Advocacy and Support
 //
+
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
 // provided that the above copyright notice appears in all copies and
@@ -27,13 +28,13 @@ using Microsoft.AspNetCore.SignalR;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace forgesample.Controllers
+namespace APSsample.Controllers
 {
     [ApiController]
     public class ModelDerivativeController : ControllerBase
     {
-        private IHubContext<ForgeCommunicationHub> _hubContext;
-        public ModelDerivativeController(IHubContext<ForgeCommunicationHub> hubContext)
+        private IHubContext<APSCommunicationHub> _hubContext;
+        public ModelDerivativeController(IHubContext<APSCommunicationHub> hubContext)
         {
             _hubContext = hubContext;
         }
@@ -44,7 +45,7 @@ namespace forgesample.Controllers
         /// <param name="objModel"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/forge/modelderivative/jobs")]
+        [Route("api/apsmodelderivative/jobs")]
         public async Task<dynamic> TranslateObject([FromBody]TranslateObjectModel objModel)
         {
             dynamic oauth = await OAuthController.GetInternalAsync();
@@ -55,7 +56,7 @@ namespace forgesample.Controllers
             dynamic existingHooks = await webhook.GetHooksAsync(DerivativeWebhookEvent.ExtractionFinished);
 
             // get the callback from your settings (e.g. web.config)
-            string callbackUlr = OAuthController.GetAppSetting("FORGE_WEBHOOK_URL") + "/api/forge/callback/modelderivative";
+            string callbackUlr = OAuthController.GetAppSetting("FORGE_WEBHOOK_URL") + "/api/apscallback/modelderivative";
 
             bool createHook = true; // need to create, we don't know if our hook is already there...
             foreach (KeyValuePair<string, dynamic> hook in new DynamicDictionaryItems(existingHooks.data))
@@ -98,7 +99,7 @@ namespace forgesample.Controllers
 
 
         [HttpPost]
-        [Route("api/forge/callback/modelderivative")]
+        [Route("api/apscallback/modelderivative")]
         public async Task<IActionResult> DerivativeCallback([FromBody]JObject body)
         {
             String connectionId = body["hook"]["scope"]["workflow"].Value<String>();

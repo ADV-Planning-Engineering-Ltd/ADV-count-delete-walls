@@ -1,7 +1,8 @@
 ﻿/////////////////////////////////////////////////////////////////////
-// Copyright (c) Autodesk, Inc. All rights reserved
-// Written by Forge Partner Development
+// Copyright 2022 Autodesk Inc
+// Written by Develope Advocacy and Support
 //
+
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
 // provided that the above copyright notice appears in all copies and
@@ -28,8 +29,8 @@ $(document).ready(function () {
 });
 
 function prepareLists() {
-    list('activity', '/api/forge/designautomation/activities');
-    list('engines', '/api/forge/designautomation/engines');
+    list('activity', '/api/apsdesignautomation/activities');
+    list('engines', '/api/apsdesignautomation/engines');
     list('localBundles', '/api/appbundles');
 }
 
@@ -62,7 +63,7 @@ function clearAccount() {
         '\n\nYou cannot undo this operation. Proceed?')) return;
 
     jQuery.ajax({
-        url: 'api/forge/designautomation/account',
+        url: 'api/apsdesignautomation/account',
         method: 'DELETE',
         success: function () {
             prepareLists();
@@ -89,7 +90,7 @@ function createAppBundleActivity() {
 
 function createAppBundle(cb) {
     jQuery.ajax({
-        url: 'api/forge/designautomation/appbundles',
+        url: 'api/apsdesignautomation/appbundles',
         method: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
@@ -105,7 +106,7 @@ function createAppBundle(cb) {
 
 function createActivity(cb) {
     jQuery.ajax({
-        url: 'api/forge/designautomation/activities',
+        url: 'api/apsdesignautomation/activities',
         method: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
@@ -147,7 +148,7 @@ function startWorkitem() {
             }));
             writeLog('Start checking input file...');
             $.ajax({
-                url: 'api/forge/designautomation/startworkitem',
+                url: 'api/apsdesignautomation/startworkitem',
                 data: formData,
                 processData: false,
                 contentType: false,
@@ -172,7 +173,7 @@ var connectionId;
 
 function startConnection(onReady) {
     if (connection && connection.connectionState) { if (onReady) onReady(); return; }
-    connection = new signalR.HubConnectionBuilder().withUrl("/api/signalr/forgecommunication").build();
+    connection = new signalR.HubConnectionBuilder().withUrl("/api/signalr/apscommunication").build();
     connection.start()
         .then(function () {
             connection.invoke('getConnectionId')

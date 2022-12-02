@@ -1,7 +1,8 @@
 ﻿/////////////////////////////////////////////////////////////////////
-// Copyright (c) Autodesk, Inc. All rights reserved
-// Written by Forge Partner Development
+// Copyright 2022 Autodesk Inc
+// Written by Develope Advocacy and Support
 //
+
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
 // provided that the above copyright notice appears in all copies and
@@ -25,7 +26,7 @@ using System.Threading.Tasks;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace forgesample.Controllers
+namespace APSsample.Controllers
 {
     [ApiController]
     public class OSSController : ControllerBase
@@ -34,7 +35,7 @@ namespace forgesample.Controllers
         /// Return list of buckets (id=#) or list of objects (id=bucketKey)
         /// </summary>
         [HttpGet]
-        [Route("api/forge/oss/buckets")]
+        [Route("api/apsoss/buckets")]
         public async Task<IList<TreeNode>> GetOSSAsync([FromQuery]string id)
         {
             IList<TreeNode> nodes = new List<TreeNode>();
@@ -91,7 +92,7 @@ namespace forgesample.Controllers
         /// Create a new bucket 
         /// </summary>
         [HttpPost]
-        [Route("api/forge/oss/buckets")]
+        [Route("api/apsoss/buckets")]
         public async Task<dynamic> CreateBucket([FromBody]CreateBucketModel bucket)
         {
             BucketsApi buckets = new BucketsApi();
@@ -115,7 +116,7 @@ namespace forgesample.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/forge/oss/objects")]
+        [Route("api/apsoss/objects")]
         public async Task<dynamic> UploadObject([FromForm]UploadFileInput input)
         {
             // basic input validation

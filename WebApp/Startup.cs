@@ -1,7 +1,8 @@
 ﻿/////////////////////////////////////////////////////////////////////
-// Copyright (c) Autodesk, Inc. All rights reserved
-// Written by Forge Partner Development
+// Copyright 2022 Autodesk Inc
+// Written by Develope Advocacy and Support
 //
+
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
 // provided that the above copyright notice appears in all copies and
@@ -19,7 +20,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace forgesample
+namespace APSsample
 {
     public class Startup
     {
@@ -38,7 +39,7 @@ namespace forgesample
             app.UseMvc();
             app.UseSignalR(routes =>
             {
-                routes.MapHub<Controllers.ForgeCommunicationHub>("/api/signalr/forgecommunication");
+                routes.MapHub<Controllers.APSCommunicationHub>("/api/signalr/forgecommunication");
             });
         }
     }

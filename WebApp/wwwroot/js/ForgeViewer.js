@@ -1,7 +1,8 @@
 ﻿/////////////////////////////////////////////////////////////////////
-// Copyright (c) Autodesk, Inc. All rights reserved
-// Written by Forge Partner Development
+// Copyright 2022 Autodesk Inc
+// Written by Develope Advocacy and Support
 //
+
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
 // provided that the above copyright notice appears in all copies and
@@ -22,11 +23,11 @@ var viewer;
 function launchViewer(urn) {
     var options = {
         env: 'AutodeskProduction',
-        getAccessToken: getForgeToken
+        getAccessToken: getAPSToken
     };
 
     Autodesk.Viewing.Initializer(options, function onInitialized() {
-        viewer = new Autodesk.Viewing.GuiViewer3D(document.getElementById('forgeViewer'));
+        viewer = new Autodesk.Viewing.GuiViewer3D(document.getElementById('apsViewer'));
         viewer.start();
         var documentId = 'urn:' + urn;
         Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
@@ -44,8 +45,8 @@ function onDocumentLoadFailure(viewerErrorCode) {
     console.error('onDocumentLoadFailure() - errorCode:' + viewerErrorCode);
 }
 
-function getForgeToken(callback) {
-    fetch('/api/forge/oauth/token').then(res => {
+function getAPSToken(callback) {
+    fetch('/api/apsoauth/token').then(res => {
         res.json().then(data => {
             callback(data.access_token, data.expires_in);
         });

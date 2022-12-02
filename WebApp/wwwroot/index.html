@@ -2,9 +2,9 @@
 <html>
 
 <head>
-    <title>Autodesk Forge - Design Automation</title>
+    <title>Autodesk APS - Design Automation</title>
     <meta charset="utf-8" />
-    <link rel="shortcut icon" href="https://github.com/Autodesk-Forge/learn.forge.viewhubmodels/raw/master/img/favicon.ico">
+    <link rel="shortcut icon" href="https://cdn.autodesk.io/favicon.ico">
     <!-- Common packages: jQuery, Bootstrap, jsTree -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -14,14 +14,14 @@
 
     <!-- .NET SignalR -->
     <script src="//unpkg.com/@aspnet/signalr@1.1.0/dist/browser/signalr.min.js"></script>
-    <!-- Autodesk Forge Viewer files -->
+    <!-- Autodesk APS Viewer files -->
     <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/style.min.css" type="text/css">
     <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
     <!-- Files for this project -->
     <link href="css/main.css" rel="stylesheet" />
-    <script src="/js/ForgeDesignAutomation.js"></script>
-    <script src="/js/ForgeTree.js"></script>
-    <script src="/js/ForgeViewer.js"></script>
+    <script src="/js/APSDesignAutomation.js"></script>
+    <script src="/js/APSTree.js"></script>
+    <script src="/js/apsViewer.js"></script>
 
 </head>
 
@@ -32,7 +32,7 @@
             <ul class="nav navbar-nav left">
                 <li>
                     <a href="http://developer.autodesk.com" target="_blank">
-                        <img alt="Autodesk Forge" src="//developer.static.autodesk.com/images/logo_forge-2-line.png"
+                        <img alt="Autodesk APS" src="//developer.static.autodesk.com/images/logo_APS-2-line.png"
                              height="20">
                     </a>
                 </li>
@@ -148,7 +148,7 @@
                 </div>
                 <center><button class="btn btn-primary" id="startWorkitem">Start workitem</button></center><br />
 
-                <div id="forgeViewer">
+                <div id="apsViewer">
                 </div>
 
             </div>

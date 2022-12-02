@@ -1,7 +1,8 @@
 ﻿/////////////////////////////////////////////////////////////////////
-// Copyright (c) Autodesk, Inc. All rights reserved
-// Written by Forge Partner Development
+// Copyright 2022 Autodesk Inc
+// Written by Develope Advocacy and Support
 //
+
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted,
 // provided that the above copyright notice appears in all copies and
@@ -37,7 +38,7 @@ using WorkItem = Autodesk.Forge.DesignAutomation.Model.WorkItem;
 using WorkItemStatus = Autodesk.Forge.DesignAutomation.Model.WorkItemStatus;
 
 
-namespace forgesample.Controllers
+namespace APSsample.Controllers
 {
     [ApiController]
     public class DesignAutomationController : ControllerBase
@@ -45,13 +46,13 @@ namespace forgesample.Controllers
         // Used to access the application folder (temp location for files & bundles)
         private IHostingEnvironment _env;
         // used to access the SignalR Hub
-        private IHubContext<ForgeCommunicationHub> _hubContext;
+        private IHubContext<APSCommunicationHub> _hubContext;
         // Local folder for bundles
         public string LocalBundlesFolder { get { return Path.Combine(_env.WebRootPath, "bundles"); } }
         /// Prefix for AppBundles and Activities
         public static string NickName {
             get {
-                var nickName = OAuthController.GetAppSetting("FORGE_DESIGN_AUTOMATION_NICKNAME");
+                var nickName = OAuthController.GetAppSetting("APS_DESIGN_AUTOMATION_NICKNAME");
                 return !String.IsNullOrEmpty(nickName) ? nickName : OAuthController.GetAppSetting("FORGE_CLIENT_ID");
             }
         }
@@ -61,7 +62,7 @@ namespace forgesample.Controllers
         DesignAutomationClient _designAutomation;
 
         // Constructor, where env and hubContext are specified
-        public DesignAutomationController(IHostingEnvironment env, IHubContext<ForgeCommunicationHub> hubContext, DesignAutomationClient api)
+        public DesignAutomationController(IHostingEnvironment env, IHubContext<APSCommunicationHub> hubContext, DesignAutomationClient api)
         {
             _designAutomation = api;
             _env = env;
@@ -91,7 +92,7 @@ namespace forgesample.Controllers
         /// Return a list of available engines
         /// </summary>
         [HttpGet]
-        [Route("api/forge/designautomation/engines")]
+        [Route("api/apsdesignautomation/engines")]
         public async Task<List<string>> GetAvailableEngines()
         {
             dynamic oauth = await OAuthController.GetInternalAsync();
@@ -106,7 +107,7 @@ namespace forgesample.Controllers
         /// Define a new appbundle
         /// </summary>
         [HttpPost]
-        [Route("api/forge/designautomation/appbundles")]
+        [Route("api/apsdesignautomation/appbundles")]
         public async Task<IActionResult> CreateAppBundle([FromBody]JObject appBundleSpecs)
         {
             // basic input validation
@@ -192,7 +193,7 @@ namespace forgesample.Controllers
         /// Define a new activity
         /// </summary>
         [HttpPost]
-        [Route("api/forge/designautomation/activities")]
+        [Route("api/apsdesignautomation/activities")]
         public async Task<IActionResult> CreateActivity([FromBody]JObject activitySpecs)
         {
             // basic input validation
@@ -248,7 +249,7 @@ namespace forgesample.Controllers
         /// Get all Activities defined for this account
         /// </summary>
         [HttpGet]
-        [Route("api/forge/designautomation/activities")]
+        [Route("api/apsdesignautomation/activities")]
         public async Task<List<string>> GetDefinedActivities()
         {
             // filter list of 
@@ -263,7 +264,7 @@ namespace forgesample.Controllers
 
 
         [HttpPost]
-        [Route("api/forge/designautomation/startworkitem")]
+        [Route("api/apsdesignautomation/startworkitem")]
         public async Task<IActionResult> StartWorkItem([FromForm]StartWorkitemInput input)
         {
             // basic input validation
@@ -311,7 +312,7 @@ namespace forgesample.Controllers
 
             // prepare & submit workitem
             // the callback contains the connectionId (used to identify the client) and the outputFileName of this workitem
-            string callbackUrl = string.Format("{0}/api/forge/callback/designautomation?id={1}&bucketKey={2}&outputFileName={3}", OAuthController.GetAppSetting("FORGE_WEBHOOK_URL"), browerConnectionId, bucketKey, outputFileNameOSS);
+            string callbackUrl = string.Format("{0}/api/apscallback/designautomation?id={1}&bucketKey={2}&outputFileName={3}", OAuthController.GetAppSetting("APS_WEBHOOK_URL"), browerConnectionId, bucketKey, outputFileNameOSS);
             WorkItem workItemSpec = new WorkItem()
             {
                 ActivityId = activityName,
@@ -334,7 +335,7 @@ namespace forgesample.Controllers
         /// Callback from Design Automation Workitem (onProgress or onComplete)
         /// </summary>
         [HttpPost]
-        [Route("/api/forge/callback/designautomation")]
+        [Route("/api/apscallback/designautomation")]
         public async Task<IActionResult> OnCallback(string id, string bucketKey, string outputFileName, [FromBody]dynamic body)
         {
             try
@@ -379,11 +380,11 @@ namespace forgesample.Controllers
         /// Clear the accounts (for debugging purpouses)
         /// </summary>
         [HttpDelete]
-        [Route("api/forge/designautomation/account")]
+        [Route("api/apsdesignautomation/account")]
         public async Task<IActionResult> ClearAccount()
         {
             // clear account
-            await _designAutomation.DeleteForgeAppAsync("me");
+            await _designAutomation.DeleteAPSAppAsync("me");
             return Ok();
         }
 
@@ -403,7 +404,7 @@ namespace forgesample.Controllers
     /// <summary>
     /// Class uses for SignalR
     /// </summary>
-    public class ForgeCommunicationHub : Microsoft.AspNetCore.SignalR.Hub
+    public class APSCommunicationHub : Microsoft.AspNetCore.SignalR.Hub
     {
         public string GetConnectionId() { return Context.ConnectionId; }
     }

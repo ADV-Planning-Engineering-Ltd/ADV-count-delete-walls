@@ -47,4 +47,4 @@ This sample is licensed under the terms of the [MIT License](http://opensource.o
 
 ## Written by
 
-Zhong Wu, Forge Partner Development team.
+Develope Advocacy and Support, Autodesk

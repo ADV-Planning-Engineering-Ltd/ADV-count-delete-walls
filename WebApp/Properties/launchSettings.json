@@ -12,15 +12,15 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "FORGE_CLIENT_SECRET": "your client id",
+        "APS_CLIENT_SECRET": "your client id",
         "ASPNETCORE_URLS": "http://localhost:3000",
-        "FORGE_CLIENT_ID": "your client secret",
+        "APS_CLIENT_ID": "your client secret",
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "FORGE_DESIGN_AUTOMATION_NICKNAME": "",
-        "FORGE_WEBHOOK_URL": "your ngrok address"
+        "APS_DESIGN_AUTOMATION_NICKNAME": "",
+        "APS_WEBHOOK_URL": "your ngrok address"
       }
     },
-    "forgesample": {
+    "APSsample": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
