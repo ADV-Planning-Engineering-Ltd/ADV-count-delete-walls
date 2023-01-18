@@ -18,11 +18,12 @@
 /////////////////////////////////////////////////////////////////////
 using System.Collections.Generic;
 using System.IO;
-
+using System.Linq;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using DesignAutomationFramework;
 using Newtonsoft.Json;
+using AdvObjects.Bundle;
 
 
 namespace CountIt
@@ -86,18 +87,44 @@ namespace CountIt
             {
                 FilteredElementCollector elemCollector = new FilteredElementCollector(revitDoc);
                 elemCollector.OfClass(typeof(Wall));
-                int count = elemCollector.ToElementIds().Count;
-                results.walls += count;
-                results.total += count;
+                var adskWalls = elemCollector.ToElements().ToList();
+
+                foreach(var wall in adskWalls)
+                {
+                    var returnWall = new AdvWall()
+                    {
+                        Property1 = wall.Name,
+                        Property2 = wall.Pinned.ToString(),
+                        Property3 = wall.WorksetId.ToString(),
+                        Property4 = null,
+                        Property5 = string.Empty,
+                        Property6 = wall.LevelId.ToString(),     
+                    };
+                    results.Walls.Add(returnWall);
+                }
             }
 
             if (countItParams.floors)
             {
                 FilteredElementCollector elemCollector = new FilteredElementCollector(revitDoc);
                 elemCollector.OfClass(typeof(Floor));
-                int count = elemCollector.ToElementIds().Count;
-                results.floors += count;
-                results.total += count;
+                var adskFloors = elemCollector.ToElements().ToList();
+
+                foreach (var floor in adskFloors)
+                {
+                    var returnFloor = new AdvFloor()
+                    {
+                        Property1 = floor.Name,
+                        Property2 = floor.Pinned.ToString(),
+                        Property3 = floor.WorksetId.ToString(),
+                        Property4 = floor.ViewSpecific.ToString(),
+                        Property5 = floor.UniqueId,
+                        Property6 = floor.LevelId.ToString(),
+                        Property7 = null,
+                        Property8 = string.Empty,
+                    };
+                    results.Floors.Add(returnFloor);
+                }
             }
 
             if (countItParams.doors)
@@ -107,22 +134,22 @@ namespace CountIt
                                                    .OfCategory(BuiltInCategory.OST_Doors)
                                                    .ToElements();
 
-                int count = collection.Count;
-                results.doors += count;
-                results.total += count;
+                var adskDoors = collection.ToList();
+
+                foreach (var door in adskDoors)
+                {
+                    var returnDoor = new AdvDoor()
+                    {
+                        Property1 = door.Name,
+                        Property2 = door.Pinned.ToString(),
+                        Property3 = string.Empty,
+                        //Property4 = null Property is not set to test if possible
+
+                    };
+                    results.Doors.Add(returnDoor);
+                }
             }
 
-            if (countItParams.windows)
-            {
-                FilteredElementCollector collector = new FilteredElementCollector(revitDoc);
-                ICollection<Element> collection = collector.OfClass(typeof(FamilyInstance))
-                                                   .OfCategory(BuiltInCategory.OST_Windows)
-                                                   .ToElements();
-
-                int count = collection.Count;
-                results.windows += count;
-                results.total += count;
-            }
         }
 
         /// <summary>

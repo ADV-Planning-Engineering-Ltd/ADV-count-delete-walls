@@ -30,14 +30,13 @@ namespace CountIt
       public bool walls { get; set; } = false;
       public bool floors { get; set; } = false;
       public bool doors { get; set; } = false;
-      public bool windows { get; set; } = false;
 
       static public CountItParams Parse(string jsonPath)
       {
          try
          {
             if (!File.Exists(jsonPath))
-               return new CountItParams { walls = true, floors = true, doors = true, windows = true };
+               return new CountItParams { walls = true, floors = true, doors = true };
 
             string jsonContents = File.ReadAllText(jsonPath);
             return JsonConvert.DeserializeObject<CountItParams>(jsonContents);
